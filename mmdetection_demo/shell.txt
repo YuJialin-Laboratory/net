@@ -1,0 +1,34 @@
+mmdetection: (mmdetection-python_3.7-pytorch_1.7.1) CUDA 11.0
+
+1. 训练
+python tools/train.py configs/vegetables/faster_rcnn_r50_fpn_coco.py --work-dir /media/chenyong/4c111cfd-b56a-44bf-9853-0a097d28c38d/jin/models_outputs/vegetables/mmdetection/faster_rcnn_r50_fpn_coco/
+
+如果提示CUDA不够用了，就使用下面的命令
+CUDA_VISIBLE_DEVICES="1" python tools/train.py configs/vegetables/faster_rcnn_r50_fpn_coco.py --work-dir /media/chenyong/4c111cfd-b56a-44bf-9853-0a097d28c38d/jin/models_outputs/vegetables/mmdetection/faster_rcnn_r50_fpn_coco/
+
+
+2. 评价测试集、生成.pkl文件、预测效果图
+python tools/test.py configs/vegetables/faster_rcnn_r50_fpn_coco.py /media/chenyong/4c111cfd-b56a-44bf-9853-0a097d28c38d/jin/models_outputs/vegetables/mmdetection/faster_rcnn_r50_fpn_coco/epoch_8.pth --out /media/chenyong/4c111cfd-b56a-44bf-9853-0a097d28c38d/jin/models_outputs/vegetables/mmdetection/faster_rcnn_r50_fpn_coco/result.pkl --show-dir /media/chenyong/4c111cfd-b56a-44bf-9853-0a097d28c38d/jin/models_outputs/vegetables/mmdetection/faster_rcnn_r50_fpn_coco/res --show-score-thr 0.3
+
+
+3. 评价数据
+python tools/analysis_tools/eval_metric.py configs/vegetables/faster_rcnn_r50_fpn_coco.py /media/chenyong/4c111cfd-b56a-44bf-9853-0a097d28c38d/jin/models_outputs/vegetables/mmdetection/faster_rcnn_r50_fpn_coco/result.pkl --eval bbox
+
+
+4. 计算FPS
+python tools/analysis_tools/benchmark.py configs/vegetables/faster_rcnn_r50_fpn_coco.py /media/chenyong/4c111cfd-b56a-44bf-9853-0a097d28c38d/jin/models_outputs/vegetables/mmdetection/faster_rcnn_r50_fpn_coco/epoch_8.pth
+
+
+5. 修改预测框颜色、粗细、文本大小
+文件路径: mmdetection/mmdet/core/visualization/image.py（搜索'marked by jin'）
+
+
+6. DetVisGUI
+python DetVisGUI.py ../configs/vegetables/faster_rcnn_r50_fpn_coco.py --det_file /media/chenyong/4c111cfd-b56a-44bf-9853-0a097d28c38d/jin/models_outputs/vegetables/mmdetection/faster_rcnn_r50_fpn_coco/result.pkl --stage test
+
+7. config
+https://mmdetection.readthedocs.io/en/latest/tutorials/customize_dataset.html
+
+
+
+
